@@ -38,14 +38,6 @@ Route::get('/', [GuestController::class, 'index'])->name('guest');
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/aboutus', function () {
-        return Inertia::render('AboutUs');
-    })->name('aboutus');
-
-    Route::get('/users', function () {
-        return Inertia::render('Users');
-    })->name('users');
-
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
     Route::post('/settings/transaction', [SettingsController::class, 'updateTransaction'])->name('settings.updatetransaction');
@@ -77,3 +69,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/{any?}', function () {
+    return Inertia::render('404');
+})->name('404');
