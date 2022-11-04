@@ -29,9 +29,8 @@ function deleteCourt() {
         <div class="flex items-center">
             <div class="flex-shrink-0 h-10 w-10">
                 <img class="object-contain w-10 h-10 rounded-full border-4"
-                    :class="court_data.court.verified == 0 ? 'border-gray-300' : 'border-blue-700'"
+                    :class="court_data.court.verified == 1 ? 'border-blue-700' : 'border-gray-300'"
                     :src="$imageURL+'/uploads/'+court_data.court.court_images.split(',')[0]">
-
             </div>
             <div class="ml-4 text-base">
                 <div class="font-semibold text-gray-900">

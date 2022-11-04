@@ -1,1 +1,0 @@
-import{_ as e}from"./ApplicationLogo.4f660ea0.js";import{o as s,c as o,b as t}from"./app.adb44345.js";const c={},a={class:"text-center text-gray-500 italic my-5 text-sm"},r=t("i",{class:"fa-solid fa-heart-crack text-5xl"},null,-1),_=t("p",{class:"my-3"},"No data to show",-1),n=[r,_];function i(l,d){return s(),o("div",a,n)}const x=e(c,[["render",i]]);export{x as N};

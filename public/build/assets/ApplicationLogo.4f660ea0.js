@@ -1,1 +1,0 @@
-import{o as a,c as r}from"./app.adb44345.js";const n="/build/assets/tarag_logo.d05aba0e.png",_=(o,t)=>{const e=o.__vccOpts||o;for(const[c,s]of t)e[c]=s;return e},i={},p={src:n,alt:"Tara G! Logo"};function l(o,t){return a(),r("img",p)}const f=_(i,[["render",l]]);export{f as B,_,n as a};

@@ -10,7 +10,7 @@ const rooms = defineProps({
     toggle: Boolean
 })
 
-console.log(rooms.courtRooms.length)
+// console.log(rooms.courtRooms.length)
 
 </script>
     

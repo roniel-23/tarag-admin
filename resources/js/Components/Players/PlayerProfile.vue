@@ -24,6 +24,20 @@ function showVerification() {
     showVerificationView.value = !showVerificationView.value;
 }
 
+function requestID() {
+    Swal.fire({
+        title: 'Request another ID?',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: 'Confirm'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Inertia.post(`/verification/player/request/${player_data.player.user_id}`)
+            location.reload()
+        }
+    })
+}
+
 function showAlert() {
     Swal.fire({
         title: 'Player will be set to verified.',
@@ -97,7 +111,7 @@ function showAlert() {
             <div v-show="!showVerificationView" class="text-lg text-gray-400 px-10">
                 <div class="text-xs">Weight</div>
                 <div class="text-black font-semibold">
-                    72 kg
+                    {{ player.weight }}kg
                 </div>
                 <div class="text-xs mt-4">Height</div>
                 <div class="text-black font-semibold">
@@ -137,10 +151,18 @@ function showAlert() {
                 <div v-if="player.verified == 0" class="grid text-white grid-cols-4 gap-1">
                     <button @click="showAlert"
                         class="shadow-lg bg-green-600 rounded-l-md hover:bg-green-700">Accept</button>
-                    <button class="shadow-lg col-span-2 bg-gray-900 hover:bg-gray-800">Request another
+                    <button @click="requestID" class="shadow-lg col-span-2 bg-gray-900 hover:bg-gray-800">Request another
                         ID</button>
                     <button @click="showVerification"
                         class="shadow-lg bg-red-600 rounded-r-md hover:bg-red-700 ">Close</button>
+                </div>
+                <div v-if="player.verified == 2" class="grid text-white grid-cols-4 gap-1">
+                    <button @click="showAlert"
+                        class="shadow-lg bg-green-600 rounded-l-md hover:bg-green-700">Accept</button>
+                    <button disabled
+                        class="col-span-2 text-gray-800">Request sent!</button>
+                    <button @click="showVerification"
+                        class="shadow-lg rounded-r-md bg-red-600 hover:bg-red-700">Close</button>
                 </div>
             </div>
         </div>

@@ -45,7 +45,7 @@ function updateLandingPage() {
 
         <div class="py-3">
             <div class="max-w-7xl px-8 bg-white">
-                <div class="flex justify-center py-10">
+                <div class="flex justify-center pt-10">
                     <div class="w-64 text-lg font-semibold text-black mt-2">
                         <i class="text-blue-500 fa-solid fa-bars-progress"></i>
                         <span class="text-blue-700 ml-2">Transactions</span>
@@ -70,7 +70,7 @@ function updateLandingPage() {
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th scope="row"
                                             class="py-4 px-6 text-base text-gray-900 whitespace-nowrap dark:text-white">
-                                            Player Transaction Limit
+                                            Player Transaction Limit (<span class="font-normal"> daily </span>)
                                         </th>
                                         <td class="py-4 px-6 text-gray-800 font-bold">
                                             <div v-if="!showTransactEdit" class="w-44 text-sm">{{
@@ -100,7 +100,7 @@ function updateLandingPage() {
                                             <input v-else v-model="percentage" type="number"
                                                 class="w-44 text-sm py-0 px-0 rounded-sm border-none ring focus:outline-none" />
                                         </td>
-                                        <td class="py-4 px-6 text-lg">
+                                        <td class="py-4 px-6 text-base">
                                             <i v-if="!showPercentEdit" @click="showPercentEdit = !showPercentEdit"
                                                 class="fa-solid fa-pen cursor-pointer hover:text-blue-500 hover:scale-110"></i>
                                             <div v-else>
@@ -117,7 +117,7 @@ function updateLandingPage() {
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-center py-10">
+                <div class="flex justify-center pt-10">
                     <div class="w-64 text-lg font-semibold text-black mt-2">
                         <i class="text-blue-500 fa-solid fa-bars-progress"></i>
                         <span class="text-blue-700 ml-2">Landing Page</span>

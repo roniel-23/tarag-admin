@@ -1,6 +1,7 @@
 <script setup>
 import NavigationAdmin from '../Components/Navigation/NavigationAdmin.vue'
 import Logo from '@/Components/ApplicationLogo.vue'
+
 </script>
 
 <template>

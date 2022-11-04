@@ -125,11 +125,15 @@ class PlayersController extends Controller
               ->where('id', $user_id)
               ->update(['verified' => 1]);
 
-        // $player = DB::table('players')
-        //       ->where('user_id', $user_id)
-        //       ->update(['verified' => 1]);
-
               return Redirect::route('player.show', $user_id);
+    }
+
+    public function requestID($user_id){
+        $user = DB::table('users')
+              ->where('id', $user_id)
+              ->update(['verified' => 2]);
+
+        return Redirect::route('player.show', $user_id);
     }
 
     /**

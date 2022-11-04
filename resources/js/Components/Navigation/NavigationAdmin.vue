@@ -81,6 +81,12 @@ const showingNavigationDropdown = ref(false);
                         </BreezeResponsiveNavLink>
                     </div>
                     <div class="pt-2 pb-3 space-y-1">
+                        <BreezeResponsiveNavLink :href="route('location')" :active="route().current('location')">
+                            <i class="w-8 fa-solid fa-location-dot"></i>
+                            Location
+                        </BreezeResponsiveNavLink>
+                    </div>
+                    <div class="pt-2 pb-3 space-y-1">
                         <BreezeResponsiveNavLink :href="route('settings')" :active="route().current('settings')">
                             <i class="w-8 fa-solid fa-gears"></i>
                             Settings
@@ -106,14 +112,13 @@ const showingNavigationDropdown = ref(false);
         </div>
 
         <!-- Responsive Navigation Menu -->
-        <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
+        <!-- <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                     Dashboard
                 </BreezeResponsiveNavLink>
             </div>
 
-            <!-- Responsive Settings Options -->
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-800">{{ $page.props.auth.user.name }}</div>
@@ -126,7 +131,7 @@ const showingNavigationDropdown = ref(false);
                     </BreezeResponsiveNavLink>
                 </div>
             </div>
-        </div>
+        </div> -->
     </nav>
 
 

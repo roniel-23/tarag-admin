@@ -32,6 +32,20 @@ function showFullHeader() {
     showFullHeaderView.value = !showFullHeaderView.value;
 }
 
+function requestID() {
+    Swal.fire({
+        title: 'Request another ID?',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: 'Confirm'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Inertia.post(`/verification/court/request/${court_data.court.user_id}`)
+            location.reload()
+        }
+    })
+}
+
 function showAlert() {
     Swal.fire({
         title: 'Court will be set to verified.',
@@ -153,9 +167,17 @@ function showAlert() {
                 <div v-if="court.verified == 0" class="grid text-white grid-cols-4 gap-1">
                     <button @click="showAlert"
                         class="shadow-lg bg-green-600 rounded-l-md hover:bg-green-700">Accept</button>
-                    <button 
+                    <button @click="requestID"
                         class="shadow-lg col-span-2 bg-gray-900 hover:bg-gray-800">Request another
                         ID</button>
+                    <button @click="showVerification"
+                        class="shadow-lg rounded-r-md bg-red-600 hover:bg-red-700">Close</button>
+                </div>
+                <div v-if="court.verified == 2" class="grid text-white grid-cols-4 gap-1">
+                    <button @click="showAlert"
+                        class="shadow-lg bg-green-600 rounded-l-md hover:bg-green-700">Accept</button>
+                    <button disabled
+                        class="col-span-2 text-gray-800">Request sent!</button>
                     <button @click="showVerification"
                         class="shadow-lg rounded-r-md bg-red-600 hover:bg-red-700">Close</button>
                 </div>

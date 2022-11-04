@@ -6,6 +6,7 @@ use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\GCoinTransactionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\GuestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -59,17 +60,32 @@ Route::middleware('auth')->group(function () {
     Route::post('/courtowner/delete/{user_id}', [CourtOwnersController::class, 'deleteCourt'])->name('court.delete');
 
     Route::post('/verification/player/{user_id}', [PlayersController::class, 'verifyUser']);
+    Route::post('/verification/player/request/{user_id}', [PlayersController::class, 'requestID']);
     Route::post('/verification/court/{user_id}', [CourtOwnersController::class, 'verifyCourt']);
+    Route::post('/verification/court/request/{user_id}', [CourtOwnersController::class, 'requestID']);
 
     Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms');
 
     Route::get('/gcointransaction', [GCoinTransactionController::class, 'index'])->name('gcointransaction');
     Route::post('/gcointransaction/sendtoplayer', [GCoinTransactionController::class, 'sendToPlayer'])->name('gcointransaction.sendtoplayer');
     
+    Route::get('/location', [LocationController::class, 'index'])->name('location');
+
+    Route::post('/location/add/province', [LocationController::class, 'addProvince'])->name('location.add.province');
+    Route::post('/location/delete/province', [LocationController::class, 'deleteProvince'])->name('location.delete.province');
+    Route::post('/location/edit/province', [LocationController::class, 'editProvince'])->name('location.edit.province');
+
+    Route::post('/location/add/municipality', [LocationController::class, 'addMunicipality'])->name('location.add.municipality');
+    Route::post('/location/delete/municipality', [LocationController::class, 'deleteMunicipality'])->name('location.delete.municipality');
+    Route::post('/location/edit/municipality', [LocationController::class, 'editMunicipality'])->name('location.edit.municipality');
+
+    Route::post('/location/add/barangay', [LocationController::class, 'addBarangay'])->name('location.add.barangay');
+    Route::post('/location/delete/barangay', [LocationController::class, 'deleteBarangay'])->name('location.delete.barangay');
+    Route::post('/location/edit/barangay', [LocationController::class, 'editBarangay'])->name('location.edit.barangay');
 });
 
 require __DIR__.'/auth.php';
 
 Route::get('/{any?}', function () {
     return Inertia::render('404');
-})->name('404');
+});

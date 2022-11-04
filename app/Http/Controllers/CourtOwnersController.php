@@ -118,11 +118,15 @@ class CourtOwnersController extends Controller
               ->where('id', $user_id)
               ->update(['verified' => 1]);
 
-        // $court = DB::table('court_owners')
-        //       ->where('user_id', $user_id)
-        //       ->update(['verified' => 1]);
+        return Redirect::route('court.show', $user_id);
+    }
 
-              return Redirect::route('player.show', $user_id);
+    public function requestID($user_id){
+        $user = DB::table('users')
+              ->where('id', $user_id)
+              ->update(['verified' => 2]);
+
+        return Redirect::route('court.show', $user_id);
     }
 
     /**

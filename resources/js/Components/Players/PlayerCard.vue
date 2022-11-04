@@ -30,7 +30,7 @@ function deletePlayer() {
             <div class="flex-shrink-0 h-10 w-10">
                 <img 
                     class="object-contain w-10 h-10 rounded-full border-4"
-                    :class="player_data.player.verified == 0 ? 'border-gray-300' : 'border-blue-700'"
+                    :class="player_data.player.verified == 1 ? 'border-blue-700' : 'border-gray-300'"
                     :src="$imageURL+'/uploads/'+player_data.player.photo">
 
             </div>
