@@ -1,7 +1,7 @@
 <script setup>
-import { defineProps, defineEmits, onMounted, ref } from "vue";
+import { defineProps, defineEmits, ref } from "vue";
 import * as htmlToImage from 'html-to-image';
-import { toJpeg } from 'html-to-image';
+import { toPng, toJpeg } from 'html-to-image';
 
 const props = defineProps({
     transaction: Object,
@@ -12,14 +12,14 @@ let receiver = ref('');
 const emits = defineEmits(['close'])
 
 function saveReceipt(reference_no) {
-    htmlToImage.toJpeg(document.getElementById('image_to_save'))
+    htmlToImage.toJpeg(document.getElementById('image_to_save'), { quality: 0.95 })
         .then(function (dataUrl) {
             var link = document.createElement('a');
             link.download = 'receipt-' + reference_no;
             link.href = dataUrl;
             link.click();
         });
-}
+    }
 
 </script>
 
@@ -61,7 +61,7 @@ function saveReceipt(reference_no) {
                                         <div class="text-gray-600">
                                             <small>Sender</small>
                                         </div>
-                                        <div v-if="transaction.sender_first_name != null "
+                                        <div v-if="transaction.sender_first_name != null"
                                             class="text-base font-semibold">
                                             {{ transaction.sender_first_name }} {{ transaction.sender_last_name }}
                                         </div>

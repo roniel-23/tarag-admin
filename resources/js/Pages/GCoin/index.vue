@@ -14,6 +14,7 @@ import DoughnutGraph from '@/Components/DoughnutGraph.vue'
 const { user, loading, error } = storeToRefs(useUserNameGetterStore());
 const { fetchUserName } = useUserNameGetterStore();
 
+let inputID = ref('');
 let event = ref('');
 let filter = ref(null);
 let date_to = ref(null);
@@ -48,7 +49,14 @@ function showModalTransaction(transaction){
 }
 
 function showPlayerInfoView() {
-    fetchUserName(form.userID)
+    if(inputID.value.includes('b') || inputID.value.includes('B')){
+        form.userID = inputID.value.slice(3)
+        console.log(form.userID)
+        fetchUserName(form.userID)
+    }else{
+        form.userID = inputID.value
+        fetchUserName(form.userID)
+    }
 }
 
 function changeValue(value) {
@@ -57,6 +65,7 @@ function changeValue(value) {
 function reset() {
     form.userID = ''
     form.amount = ''
+    inputID.value = ''
     fetchUserName(0)
 }
 
@@ -185,15 +194,15 @@ watch([event, filter, date_from, date_to], ([event_value, filter_value, date_fro
                                 <div class="grid gap-5 content-end">
                                     <div class="grid justify-center">
                                         <label for="userID" class="text-xs text-gray-900 mb-1">USER ID</label>
-                                        <input v-model="form.userID"
-                                            class="rounded-full border-gray-500 text-center w-60 font-bold"
-                                            type="number" name="userID" placeholder="Player User ID" :disabled="user"
+                                        <input v-model="inputID"
+                                            class="rounded-full border-gray-500 text-center w-60 font-semibold uppercase"
+                                            type="text" name="userID" placeholder="Player User ID" :disabled="user"
                                             required>
                                     </div>
                                     <div class="grid justify-center">
                                         <label for="amount" class="text-xs text-gray-900 mb-1">AMOUNT</label>
-                                        <input v-model="form.amount" class="rounded-full text-center w-60 font-bold"
-                                            type="number" name="amount" placeholder="Input Amount" step="5" required
+                                        <input v-model="form.amount" class="rounded-full text-center w-60 font-semibold"
+                                            type="number" name="amount" placeholder="ENTER AMOUNT" step="5" required
                                             :disabled="!user">
                                     </div>
                                     <div class="grid grid-cols-4 gap-2 text-white font-semibold text-center mt-2">
@@ -208,12 +217,12 @@ watch([event, filter, date_from, date_to], ([event_value, filter_value, date_fro
                                             class="cursor-pointer bg-blue-900 rounded-full uppercase text-center py-1 hover:scale-110">
                                             <small>Validate</small>
                                         </div>
-                                        <button v-if="user"
+                                        <button type="submit" v-if="user"
                                             class="bg-blue-900 rounded-full uppercase py-1 hover:scale-110"
                                             :disabled="form.processing">
                                             <small>Send G! Coin</small>
                                         </button>
-                                        <button @click="reset"
+                                        <button type="reset" @click="reset"
                                             class="bg-red-700 rounded-full uppercase py-1 shadow-lg hover:scale-110">
                                             <small>Clear</small>
                                         </button>

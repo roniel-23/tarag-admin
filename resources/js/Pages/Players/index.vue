@@ -6,7 +6,7 @@ import Spinner from '@/Components/Spinner.vue'
 import { Head } from "@inertiajs/inertia-vue3";
 import { defineProps, ref, watch } from "vue";
 import { Link } from '@inertiajs/inertia-vue3';
-import {Inertia} from "@inertiajs/inertia";
+import { Inertia } from "@inertiajs/inertia";
 import { usePlayersCountStore } from '@/Stores/PlayersCountStore'
 import { storeToRefs } from "pinia";
 
@@ -24,10 +24,10 @@ let search = ref(props.filter);
 // console.log(props.filter)
 
 watch(search, value => {
-  Inertia.get('/players', { search: value }, {
-    preserveState: true,
-    replace: true
-  });
+    Inertia.get('/players', { search: value }, {
+        preserveState: true,
+        replace: true
+    });
 });
 
 </script>
@@ -68,15 +68,21 @@ watch(search, value => {
         </template>
 
         <div class="flex justify-between my-2 items-center font-semibold">
-            <div class="grid grid-cols-3 gap-2 text-sm font-semibold text-white text-center items-center">
+            <div class="grid grid-cols-4 gap-2 text-sm font-semibold text-white text-center items-center">
                 <Link :href="route('players')">
-                    <BreezeButton class="justify-center w-full">PLAYERS</BreezeButton>
+                <BreezeButton class="justify-center w-full">PLAYERS</BreezeButton>
                 </Link>
                 <Link :href="route('players.verified')">
-                    <BreezeButton class="justify-center w-full">VERIFIED PLAYERS</BreezeButton>
+                <BreezeButton class="justify-center w-full">VERIFIED PLAYERS</BreezeButton>
                 </Link>
                 <Link :href="route('players.unverified')">
-                    <BreezeButton class="justify-center w-full">UNVERIFIED PLAYERS</BreezeButton>
+                <BreezeButton class="justify-center w-full">UNVERIFIED PLAYERS</BreezeButton>
+                </Link>
+                <Link :href="route('players.bin')"
+                    class="w-fit bg-gray-800 px-4 py-1.5 rounded-lg border border-gray-800 hover:bg-gray-700">
+                <button class="justify-center">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
                 </Link>
             </div>
             <div class="flex justify-between gap-2 items-center">

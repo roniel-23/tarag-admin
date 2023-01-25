@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps, defineEmits } from "vue";
+import moment from "moment";
 
 defineProps({
     transaction: Object,
@@ -10,7 +11,8 @@ const emits = defineEmits(['transaction'])
 <template>
 
     <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-500">
-        {{ transaction.created_at }}
+        {{ moment(transaction.created_at).format('h:mm a MMM Do YYYY') }}
+        <!-- {{ transaction.created_at }} -->
     </td>
     <td class="px-2 py-2 whitespace-nowrap">
         <div>

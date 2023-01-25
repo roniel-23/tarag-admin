@@ -34,6 +34,8 @@ class PlayersController extends Controller
                 'players.weight',
                 'players.gender',
                 'players.gcoin',
+                'players.delete',
+                'players.created_at',
                 'users.verified'
             )
             ->when($search, function ($query, $search) {
@@ -51,6 +53,7 @@ class PlayersController extends Controller
     {
         $search = $request->input('search');
         $verified_players = DB::table('players')
+            ->where('players.delete', '=', 0)
             ->leftJoin('users', 'players.user_id' , '=' , 'users.id')
             ->select(
                 'players.user_id',
@@ -63,6 +66,7 @@ class PlayersController extends Controller
                 'players.weight',
                 'players.gender',
                 'players.gcoin',
+                'players.delete',
                 'users.verified'
             )
             ->where('users.verified', '=', 1)
@@ -81,6 +85,7 @@ class PlayersController extends Controller
     {
         $search = $request->input('search');
         $unverified_players = DB::table('players')
+            ->where('players.delete', '=', 0)
             ->leftJoin('users', 'players.user_id' , '=' , 'users.id')
             ->select(
                 'players.user_id',
@@ -93,9 +98,10 @@ class PlayersController extends Controller
                 'players.weight',
                 'players.gender',
                 'players.gcoin',
+                'players.delete',
                 'users.verified'
             )
-            ->where('users.verified', '=', 0)
+            ->whereNot('users.verified', '=', 1)
             ->when($search, function ($query, $search) {
                 $query->where('first_name', 'like', "%{$search}%");
                 $query->orwhere('last_name', 'like', "%{$search}%");
@@ -107,6 +113,50 @@ class PlayersController extends Controller
         return Inertia::render('Players/index', ['players' => $unverified_players, 'filter'=> $search]);
     }
 
+    public function bin(Request $request)
+    {
+        $search = $request->input('search');
+        $unverified_players = DB::table('players')
+        ->where('players.delete', '=', 1)
+            ->leftJoin('users', 'players.user_id' , '=' , 'users.id')
+            ->select(
+                'players.user_id',
+                'players.photo',
+                'players.first_name',
+                'players.last_name',
+                'players.position',
+                'players.code_name',
+                'players.height',
+                'players.weight',
+                'players.gender',
+                'players.gcoin',
+                'players.delete',
+                'users.verified'
+            )
+            ->when($search, function ($query, $search) {
+                $query->where('first_name', 'like', "%{$search}%");
+                $query->orwhere('last_name', 'like', "%{$search}%");
+            })
+            ->orderBy('players.created_at', 'DESC')
+            ->paginate(9)
+            ->withQueryString();
+
+        return Inertia::render('Players/index', ['players' => $unverified_players, 'filter'=> $search]);
+    }
+
+    public function recoverPlayer($user_id)
+    {
+        $player = DB::table('players')
+            ->where('user_id', '=', $user_id)
+            ->update(['delete' => 0]);
+
+        $user = DB::table('users')
+            ->where('id', '=', $user_id)
+            ->update(['delete' => 0]);
+
+            return Redirect::route('players');
+    }
+
     public function deletePlayer($user_id)
     {
         $player = DB::table('players')
@@ -116,6 +166,19 @@ class PlayersController extends Controller
         $user = DB::table('users')
             ->where('id', '=', $user_id)
             ->update(['delete' => 1]);
+
+            return Redirect::route('players');
+    }
+
+    public function permanentDeletePlayer($user_id)
+    {
+        $player = DB::table('players')
+            ->where('user_id', '=', $user_id)
+            ->delete();
+
+        $user = DB::table('users')
+            ->where('id', '=', $user_id)
+            ->delete();
 
             return Redirect::route('players');
     }
@@ -180,6 +243,7 @@ class PlayersController extends Controller
                 'players.gender',
                 'players.gcoin',
                 'players.gcoin_reward',
+                'players.created_at',
                 'users.verified'
             )
             ->first();

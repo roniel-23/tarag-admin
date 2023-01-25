@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\ApkFileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -47,17 +48,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/players', [PlayersController::class, 'index'])->name('players');
     Route::get('/players/verified', [PlayersController::class, 'verifiedPlayers'])->name('players.verified');
     Route::get('/players/unverified', [PlayersController::class, 'unverifiedPlayers'])->name('players.unverified');
+    Route::get('/players/bin', [PlayersController::class, 'bin'])->name('players.bin');
 
     Route::get('/player/{user_id}', [PlayersController::class, 'show'])->name('player.show');
+    Route::post('/player/recover/{user_id}', [PlayersController::class, 'recoverPlayer'])->name('player.recover');
     Route::post('/player/delete/{user_id}', [PlayersController::class, 'deletePlayer'])->name('player.delete');
+    Route::post('/player/delete/permanent/{user_id}', [PlayersController::class, 'permanentDeletePlayer'])->name('player.delete.permanent');
     
 
     Route::get('/courtowners', [CourtOwnersController::class, 'index'])->name('courts');
     Route::get('/courtowners/verified', [CourtOwnersController::class, 'verifiedCourts'])->name('courts.verified');
     Route::get('/courtowners/unverified', [CourtOwnersController::class, 'unverifiedCourts'])->name('courts.unverified');
+    Route::get('/courtowners/bin', [CourtOwnersController::class, 'bin'])->name('courts.bin');
 
     Route::get('/courtowner/{user_id}', [CourtOwnersController::class, 'show'])->name('court.show');
+    Route::post('/courtowner/recover/{user_id}', [CourtOwnersController::class, 'recoverCourt'])->name('court.recover');
     Route::post('/courtowner/delete/{user_id}', [CourtOwnersController::class, 'deleteCourt'])->name('court.delete');
+    Route::post('/courtowner/delete/permanent/{user_id}', [CourtOwnersController::class, 'permanentDeleteCourt'])->name('court.delete.permanent');
 
     Route::post('/verification/player/{user_id}', [PlayersController::class, 'verifyUser']);
     Route::post('/verification/player/request/{user_id}', [PlayersController::class, 'requestID']);
@@ -82,7 +89,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/location/add/barangay', [LocationController::class, 'addBarangay'])->name('location.add.barangay');
     Route::post('/location/delete/barangay', [LocationController::class, 'deleteBarangay'])->name('location.delete.barangay');
     Route::post('/location/edit/barangay', [LocationController::class, 'editBarangay'])->name('location.edit.barangay');
+
+    Route::post('/upload/apk', [ApkFileController::class, 'upload'])->name('upload.apk');
 });
+
+Route::get('/download/apk', [ApkFileController::class, 'download'])->name('download.apk');
 
 require __DIR__.'/auth.php';
 

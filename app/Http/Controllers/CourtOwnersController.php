@@ -31,6 +31,7 @@ class CourtOwnersController extends Controller
                 'court_owners.gender',
                 'court_owners.court_name',
                 'court_owners.gcoin',
+                'court_owners.delete',
                 'users.verified'
             )
             ->orderBy('court_owners.created_at', 'DESC')
@@ -58,6 +59,7 @@ class CourtOwnersController extends Controller
                 'court_owners.gender',
                 'court_owners.court_name',
                 'court_owners.gcoin',
+                'court_owners.delete',
                 'users.verified'
             )
             ->where('users.verified', '=', 1)
@@ -87,9 +89,10 @@ class CourtOwnersController extends Controller
                 'court_owners.gender',
                 'court_owners.court_name',
                 'court_owners.gcoin',
+                'court_owners.delete',
                 'users.verified'
             )
-            ->where('users.verified', '=', 0)
+            ->whereNot('users.verified', '=', 1)
             ->when($search, function ($query, $search) {
                 $query->where('first_name', 'like', "%{$search}%");
                 $query->orwhere('last_name', 'like', "%{$search}%");
@@ -98,6 +101,47 @@ class CourtOwnersController extends Controller
             ->withQueryString();
 
         return Inertia::render('CourtOwners/index', ['courts' => $unverified_courts, 'filter'=> $search]);
+    }
+
+    public function bin(Request $request)
+    {
+        $search = $request->input('search');
+        $deletedCourts = DB::table('court_owners')
+            ->where('court_owners.delete', '=', 1)
+            ->leftJoin('users', 'court_owners.user_id' , '=' , 'users.id')
+            ->select(
+                'court_owners.user_id',
+                'court_owners.court_images',
+                'court_owners.first_name',
+                'court_owners.last_name',
+                'court_owners.contact_number',
+                'court_owners.gender',
+                'court_owners.court_name',
+                'court_owners.gcoin',
+                'court_owners.delete',
+                'users.verified'
+            )
+            ->when($search, function ($query, $search) {
+                $query->where('first_name', 'like', "%{$search}%");
+                $query->orwhere('last_name', 'like', "%{$search}%");
+            })
+            ->paginate(9)
+            ->withQueryString();
+
+        return Inertia::render('CourtOwners/index', ['courts' => $deletedCourts, 'filter'=> $search]);
+    }
+
+    public function recoverCourt($user_id)
+    {
+        $court = DB::table('court_owners')
+            ->where('user_id', '=', $user_id)
+            ->update(['delete' => 0]);
+
+        $user = DB::table('users')
+            ->where('id', '=', $user_id)
+            ->update(['delete' => 0]);
+
+            return Redirect::route('courts');
     }
 
     public function deleteCourt($user_id)
@@ -109,6 +153,19 @@ class CourtOwnersController extends Controller
         $user = DB::table('users')
             ->where('id', '=', $user_id)
             ->update(['delete' => 1]);
+
+            return Redirect::route('courts');
+    }
+
+    public function permanentDeleteCourt($user_id)
+    {
+        $court = DB::table('court_owners')
+            ->where('user_id', '=', $user_id)
+            ->delete();
+
+        $user = DB::table('users')
+            ->where('id', '=', $user_id)
+            ->delete();
 
             return Redirect::route('courts');
     }

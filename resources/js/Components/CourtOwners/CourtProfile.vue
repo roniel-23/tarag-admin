@@ -2,6 +2,7 @@
 import CourtHistory from './CourtHistory.vue'
 import Spinner from '@/Components/Spinner.vue'
 import Swal from 'sweetalert2'
+import CourtFullId from './CourtFullId.vue'
 
 import { useCourtsAddressStore } from '@/Stores/CourtsAddressStore'
 import { useCourtDataStore } from '@/Stores/CourtDataStore'
@@ -16,10 +17,13 @@ const { courtData } = storeToRefs(useCourtDataStore());
 
 const showVerificationView = ref(false);
 const showFullHeaderView = ref(true);
+const showFullId = ref(false);
 
 const court_data = defineProps({
     court: Object,
 })
+
+defineEmits(['close'])
 
 fetchCourtAddress(court_data.court.user_id);
 fetchCourtData(court_data.court.id);
@@ -76,7 +80,7 @@ function showAlert() {
         <div class="flex justify-between items-center gap-5">
             <div class="flex gap-4 items-center">
                 <img class="object-contain h-64 w-96 shadow-lg p-1"
-                    :src="$imageURL+'/uploads/'+court_data.court.court_images.split(',')[0]"
+                    :src="$imageURL + '/uploads/' + court_data.court.court_images.split(',')[0]"
                     :alt="court_data.court.court_name">
 
                 <div class="grid grid-row-3 pr-10 text-gray-500">
@@ -160,15 +164,16 @@ function showAlert() {
                     </button>
                 </div>
                 <div class="mb-4">
-                    <img class="mx-auto h-48 w-80" :src="$imageURL+'/uploads/'+courtAddress.id_photo"
-                        alt="Submitted ID">
+                    <img @click="showFullId = true"
+                        class="mx-auto object-scale-down bg-white h-48 w-80 cursor-pointer transition hover:scale-150 hover:border-4 hover:border-white"
+                        :src="$imageURL + '/uploads/' + courtAddress.id_photo" alt="Submitted ID">
                 </div>
 
                 <div v-if="court.verified == 0" class="grid text-white grid-cols-4 gap-1">
                     <button @click="showAlert"
                         class="shadow-lg bg-green-600 rounded-l-md hover:bg-green-700">Accept</button>
-                    <button @click="requestID"
-                        class="shadow-lg col-span-2 bg-gray-900 hover:bg-gray-800">Request another
+                    <button @click="requestID" class="shadow-lg col-span-2 bg-gray-900 hover:bg-gray-800">Request
+                        another
                         ID</button>
                     <button @click="showVerification"
                         class="shadow-lg rounded-r-md bg-red-600 hover:bg-red-700">Close</button>
@@ -176,8 +181,7 @@ function showAlert() {
                 <div v-if="court.verified == 2" class="grid text-white grid-cols-4 gap-1">
                     <button @click="showAlert"
                         class="shadow-lg bg-green-600 rounded-l-md hover:bg-green-700">Accept</button>
-                    <button disabled
-                        class="col-span-2 text-gray-800">Request sent!</button>
+                    <button disabled class="col-span-2 text-gray-800">Request sent!</button>
                     <button @click="showVerification"
                         class="shadow-lg rounded-r-md bg-red-600 hover:bg-red-700">Close</button>
                 </div>
@@ -220,13 +224,10 @@ function showAlert() {
         </div>
     </div>
 
+    <CourtFullId v-if="showFullId" :id="($imageURL + '/uploads/' + courtAddress.id_photo)" @close="showFullId = false"></CourtFullId>
     <div v-if="courtData" class="border border-gray-100 border-1 bg-white my-1">
         <CourtHistory :courtRooms="courtData.rooms" :toggle="showFullHeaderView" />
     </div>
-
-
-
-
 
 </template>
     

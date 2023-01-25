@@ -15,15 +15,19 @@ const rooms = defineProps({
 </script>
     
 <template>
-    <div class="grid grid-cols-2 text-center text-white font-bold text-xs">
-        <div @click="active=!active" :class="active ? 'bg-gray-900': 'bg-white text-gray-900'"
-            class="border border-gray-900 py-2 cursor-pointer hover:bg-gray-900 hover:text-white">
+    <div class="grid text-center text-white font-bold text-xs">
+        <div 
+            class="bg-gray-900 border border-gray-900 py-2 cursor-pointer hover:bg-gray-900 hover:text-white">
             ROOMS
         </div>
-        <div @click="active=!active" :class="!active ? 'bg-gray-900': 'bg-white text-gray-900'"
+        <!-- <div @click="active=!active" :class="active ? 'bg-gray-900': 'bg-white text-gray-900'"
+            class="border border-gray-900 py-2 cursor-pointer hover:bg-gray-900 hover:text-white">
+            ROOMS
+        </div> -->
+        <!-- <div @click="active=!active" :class="!active ? 'bg-gray-900': 'bg-white text-gray-900'"
             class="border border-gray-900 py-2 cursor-pointer hover:bg-gray-900 hover:text-white">
             COURT GALLERY
-        </div>
+        </div> -->
     </div>
     <div v-if="active" class="flex flex-col block mt-2" :class="toggle ? 'h-72' : 'fixed-table-height'">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">

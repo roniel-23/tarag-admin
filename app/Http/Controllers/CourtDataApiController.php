@@ -18,13 +18,14 @@ class CourtDataApiController extends Controller
             ->where('court_owner_id', '=', $id)
             ->select('price_rate')
             ->first();
+        if($courtRate == null){$courtRate=0;}
 
         $courtRooms = DB::table('court_rooms')
             ->where('court_rooms.court_owner_id', '=', $id)
             ->where('court_rooms.delete', '=', '0')
             ->select('room_title', 'game_date', 'game_time', 'number_of_players', 'last_name', 'first_name')
             ->leftJoin('players', 'court_rooms.user_id', '=' ,'players.user_id')
-            ->orderBy('game_date', 'ASC')
+            ->orderBy('game_date', 'DESC')
             ->orderBy('game_time', 'ASC')
             ->get();
         

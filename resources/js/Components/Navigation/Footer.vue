@@ -8,8 +8,8 @@
             <div class="grid grid-cols-2">
                 <div class="flex gap-10 items-center">
                     <a href="#" class="text-2xl font-bold hover:text-orange-500 duration-300">TARA G!</a>
-                    <a href="#" class="text-md font-semibold hover:text-orange-500 duration-300">About</a>
-                    <a href="#" class="text-md font-semibold hover:text-orange-500 duration-300">News</a>
+                    <!-- <a href="#" class="text-md font-semibold hover:text-orange-500 duration-300">About</a> -->
+                    <!-- <a href="#" class="text-md font-semibold hover:text-orange-500 duration-300">News</a> -->
                     <a href="#" class="text-md font-semibold hover:text-orange-500 duration-300">Download App</a>
                     
                 </div>
@@ -43,8 +43,8 @@
                     <a href="#" class="text-2xl font-bold hover:text-orange-500 duration-300">TARA G!</a>
                 </div>
                 <div class="flex gap-5">
-                   <a href="#" class="text-md font-semibold hover:text-orange-500 duration-300">About</a>
-                    <a href="#" class="text-md font-semibold hover:text-orange-500 duration-300">News</a>
+                   <!-- <a href="#" class="text-md font-semibold hover:text-orange-500 duration-300">About</a> -->
+                    <!-- <a href="#" class="text-md font-semibold hover:text-orange-500 duration-300">News</a> -->
                     <a href="#" class="text-md font-semibold hover:text-orange-500 duration-300">Download App</a> 
                 </div>
                 <div>

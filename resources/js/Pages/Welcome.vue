@@ -14,7 +14,7 @@ defineProps({
 
 <template>
 
-    
+
 
     <!-- <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
         <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
@@ -29,17 +29,23 @@ defineProps({
     </div> -->
 
     <GuestLayout>
+
         <Head title="Welcome" />
-        
+
         <div class="container-banner container flex items-center">
-            <div class="max-w-7xl mx-auto sm:px-6 text-center lg:px-8 md:text-start grid md:grid-cols-2 gap-10 items-center text-white">
+            <div
+                class="max-w-7xl mx-auto sm:px-6 text-center lg:px-8 md:text-start grid md:grid-cols-2 gap-10 items-center text-white">
                 <div class="order-last md:order-first">
-                    <h1 class="text-3xl lg:text-6xl">Welcome to <span class="text-orange-500 font-bold">TARA G!</span></h1>
-                    <p>Experience a new league of basketball! Tara G! where you can create your own team, join and reserve the available court where you want to play.</p>
+                    <h1 class="text-3xl lg:text-6xl">Welcome to <span class="text-orange-500 font-bold">TARA G!</span>
+                    </h1>
+                    <p>Experience a new league of basketball! Tara G! where you can create your own team, join and
+                        reserve the available court where you want to play.</p>
                     <div class="mt-5 items-end">
-                        <button class="py-2 px-7 bg-green-700 rounded hover:bg-green-500">Download App</button>
-                        <img type="button" class="h-16 cursor-pointer mx-auto md:mx-0" src="../../../storage/images/playstore.png"
-                            alt="Play Store">
+                        <a href="download/apk">
+                            <button class="py-2 px-7 bg-green-700 rounded hover:bg-green-500">Download App</button>
+                        </a>
+                        <img type="button" class="h-16 cursor-pointer mx-auto md:mx-0"
+                            src="../../../storage/images/playstore.png" alt="Play Store">
                     </div>
                 </div>
                 <div class="w-2/3 mx-auto md:w-full">
@@ -89,7 +95,7 @@ defineProps({
         <RegisterPlayerLayout />
         <div class="container h-1 bg-gradient-to-l from-blue-700 to-red-700"></div>
         <RegisterCourtLayout />
-        <SubscribeLayout/>
+        <SubscribeLayout />
         <FooterLayout />
 
     </GuestLayout>

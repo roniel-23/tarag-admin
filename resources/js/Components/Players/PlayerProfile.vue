@@ -2,6 +2,8 @@
 import PlayerStats from '@/Components/Players/PlayerStats.vue'
 import Spinner from '@/Components/Spinner.vue'
 import Swal from 'sweetalert2'
+import PlayerFullId from './PlayerFullId.vue'
+import moment from "moment";
 
 import { usePlayersAddressStore } from '../../Stores/PlayersAddressStore'
 import { Inertia } from '@inertiajs/inertia'
@@ -13,10 +15,13 @@ const { playerAddress, loading, error } = storeToRefs(usePlayersAddressStore());
 
 
 const showVerificationView = ref(false);
+const showFullId = ref(false);
 
 const player_data = defineProps({
     player: Object,
 })
+
+defineEmits(['close'])
 
 fetchPlayerAddress(player_data.player.user_id);
 
@@ -70,14 +75,14 @@ function showAlert() {
                 <img class="object-contain h-64 w-72 p-1 shadow-lg" :src="$imageURL+'/uploads/'+player.photo"
                     :alt="player.code_name">
                 <div class="grid grid-row-3 pr-10">
-                    <div class="text-red-600 text-4xl font-bold">
-                        {{ player.user_id }}
-                    </div>
                     <div class="text-black text-3xl font-semibold">
                         {{ player.first_name }}
                     </div>
                     <div class="text-black text-3xl font-semibold">
                         {{ player.last_name }}
+                    </div>
+                    <div class="text-red-600 text-lg font-semibold">
+                        B{{ moment(player.created_at).format('YY') }}{{ player.user_id }}
                     </div>
                     <hr class="text-gray-900 mt-2">
                     <div class="text-gray-700 text-2xl font-semibold mt-2">
@@ -144,7 +149,9 @@ function showAlert() {
                 </div>
 
                 <div class="mb-4">
-                    <img class="object-contain h-48 w-80" :src="$imageURL+'/uploads/'+playerAddress.id_photo"
+                    <img @click="showFullId = true"
+                        class="mx-auto h-48 w-80 cursor-pointer transition hover:scale-150 hover:border-4 hover:border-white"
+                        :src="$imageURL+'/uploads/'+playerAddress.id_photo"
                         alt="Submitted ID">
                 </div>
 
@@ -168,6 +175,7 @@ function showAlert() {
         </div>
     </div>
 
+    <PlayerFullId v-if="showFullId" :id="playerAddress.id_photo" @close="showFullId = false"></PlayerFullId>
     <div class="border border-gray-100 border-1 bg-white my-1">
         <PlayerStats />
     </div>

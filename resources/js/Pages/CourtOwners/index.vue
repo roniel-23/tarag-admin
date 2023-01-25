@@ -68,7 +68,7 @@
             </template>
     
             <div class="flex justify-between my-2 items-center font-semibold">
-                <div class="grid grid-cols-3 gap-2 text-sm font-semibold text-white text-center items-center">
+                <div class="grid grid-cols-4 gap-2 text-sm font-semibold text-white text-center items-center">
                     <Link :href="route('courts')">
                         <BreezeButton class="justify-center w-full">COURTS</BreezeButton>
                     </Link>
@@ -77,6 +77,12 @@
                     </Link>
                     <Link :href="route('courts.unverified')">
                         <BreezeButton class="justify-center w-full">UNVERIFIED COURTS</BreezeButton>
+                    </Link>
+                    <Link :href="route('courts.bin')"
+                        class="w-fit bg-gray-800 px-4 py-1.5 rounded-lg border border-gray-800 hover:bg-gray-700">
+                        <button class="justify-center">
+                            <i class="fa-solid fa-trash"></i> 
+                        </button>
                     </Link>
                 </div>
                 <div class="flex justify-between gap-2 items-center">
